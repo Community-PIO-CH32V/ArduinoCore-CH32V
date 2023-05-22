@@ -26,6 +26,21 @@
 extern "C" {
 #endif
 #include "wch/ch32vxxx.h"
+
+#define interrupts() __enable_irq()
+#define noInterrupts() __disable_irq()
+#ifdef __cplusplus
+} // extern "C"
+#endif
+
+#ifdef __cplusplus
+/* C++ only things */
+#include "UART.h"
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 #include "pins_arduino.h"
 #ifdef __cplusplus
 } // extern "C"

@@ -6,9 +6,21 @@
 #define INT_PORT_C 2
 #define INT_PORT_D 3
 
-#define PC0 ((INT_PORT_C << 4u) | 0)
-#define PC1 ((INT_PORT_C << 4u) | 1)
+#define WCH_PIN(port, pin) (((port) << 4u) | (pin))
+#define WCH_GET_PIN_NUM(wch_pin) ((wch_pin) & 0xfu)
+#define WCH_GET_PORT_NUM(wch_pin) ((wch_pin) >> 4u)
 
+#define PC0 WCH_PIN(INT_PORT_C, 0)
+#define PC1 WCH_PIN(INT_PORT_C, 1)
+
+#define PA9 WCH_PIN(INT_PORT_A, 9)
+#define PA10 WCH_PIN(INT_PORT_A, 10)
+
+//#define HAVE_HWSERIAL0
+#define HWSERIAL0 USART1
+
+#define PIN_WIRE_HWSERIAL0_RX PA10
+#define PIN_WIRE_HWSERIAL0_TX PA9
 /* nothing yet. really */
 
 // #define PIN_SPI_MISO  (12)
