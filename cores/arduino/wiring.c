@@ -10,7 +10,7 @@ void init() {
     SysTick->SR = 0;
     SysTick->CNT = 0;
     /* 1000 Hz interrupts (aka once per millisecond) */
-    SysTick->CMP = (u64)(SystemCoreClock / 1000ul) -1;;
+    SysTick->CMP = (u64)(SystemCoreClock / 1000ul) -1;
     /* counter enable, counter interupt enable, counter clock source: HCLK, auto-reload on */
     SysTick->CTLR = 0b1111;
 }
