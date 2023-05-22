@@ -31,6 +31,7 @@ For an example project with this core, see ....
 # Related Projects
 
 For CH32V003 only: https://github.com/AlexanderMandera/arduino-wch32v003
+
 For CH58x only: https://github.com/ElectronicCats/arduino-wch58x
 
 # Copyright and Authors
