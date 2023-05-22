@@ -1,0 +1,7 @@
+{
+    "description": " Arduino core for WCH CH32V RISC-V devices",
+    "name": "framework-arduinoch32v",
+    "system": "all",
+    "url": "https://github.com/Community-PIO-CH32V/ArduinoCore-CH32V",
+    "version": "0.0.0"
+}
