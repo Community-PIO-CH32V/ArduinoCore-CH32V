@@ -17,16 +17,16 @@ For an example project with this core, see ....
 **This core is an active development and in an extremely early state.**
 
 * Board support
-  - [] CH32V003
-  - [] CH32V103
-  - [] CH32V203
-  - [] CH32V208
-  - [] CH32V303
-  - [] CH32V305
+  - [ ] CH32V003
+  - [ ] CH32V103
+  - [ ] CH32V203
+  - [ ] CH32V208
+  - [ ] CH32V303
+  - [ ] CH32V305
   - [X] CH32V307 (EXPERIMENTAL)
-  - [] CH56x
-  - [] CH57x
-  - [] CH58x
+  - [ ] CH56x
+  - [ ] CH57x
+  - [ ] CH58x
 
 # Related Projects
 
