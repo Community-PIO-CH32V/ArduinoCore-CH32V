@@ -148,6 +148,7 @@ class UartClass : public HardwareSerial
     void _rx_complete_irq(void);
     void _tx_data_empty_irq(void);
   private:
+    void activate_uart_clock();
     void _poll_tx_data_empty(void);
     UartClass* bound = NULL;
 };

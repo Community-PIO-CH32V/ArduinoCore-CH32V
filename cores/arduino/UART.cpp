@@ -157,6 +157,7 @@ bool get_isr_enabled() {
   return (result == 0x6088);
 }
 
+// Private Methods
 // To invoke data empty "interrupt" via a call, use this method
 void UartClass::_poll_tx_data_empty(void)
 {
@@ -174,6 +175,38 @@ void UartClass::_poll_tx_data_empty(void)
     // In case interrupts are enabled, the interrupt routine will be invoked by itself
 }
 
+void UartClass::activate_uart_clock() {
+    switch((uintptr_t)(this->_hwserial_module)) {
+        case USART1_BASE:
+            RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
+            break;
+        case USART2_BASE:
+            RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+            break;
+        case USART3_BASE:
+            RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
+            break;
+        case UART4_BASE:
+            RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART4, ENABLE);
+            break;
+        case UART5_BASE:
+            RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART5, ENABLE);
+            break;
+        case UART6_BASE:
+            RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART6, ENABLE);
+            break;
+        case UART7_BASE:
+            RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART7, ENABLE);
+            break;
+        case UART8_BASE:
+            RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART8, ENABLE);
+            break;
+        default:
+            /* we don't know */
+            break;
+    }    
+}
+
 // Public Methods //////////////////////////////////////////////////////////////
 
 void UartClass::begin(unsigned long baud, uint16_t config)
@@ -185,10 +218,10 @@ void UartClass::begin(unsigned long baud, uint16_t config)
     }
 
     USART_InitTypeDef USART_InitStructure;
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
+    this->activate_uart_clock(); 
 
     pinmap_initgpio(this->_hwserial_tx_pin, GPIO_Mode_AF_PP);
-    pinmap_initgpio(this->_hwserial_rx_pin, GPIO_Mode_IN_FLOATING);
+    pinmap_initgpio(this->_hwserial_rx_pin, GPIO_Mode_IPU);
 
     uint16_t word_len = config & SERIAL_DATA_MASK;
     uint16_t parity = config & SERIAL_PARITY_MASK;
@@ -210,13 +243,6 @@ void UartClass::begin(unsigned long baud, uint16_t config)
     NVIC_EnableIRQ(USART1_IRQn); // actually enable interrupts
 
     _written = false;
-
-    //Set up the rx pin
-    pinMode(_hwserial_rx_pin, INPUT_PULLUP);
-
-    //Set up the tx pin
-    //digitalWrite(_hwserial_tx_pin, HIGH);
-    //pinMode(_hwserial_tx_pin, OUTPUT);
 }
 
 void UartClass::end()
