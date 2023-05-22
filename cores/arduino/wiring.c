@@ -2,8 +2,8 @@
 
 static volatile unsigned long currTime = 0;
 void init() {
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
-	SystemCoreClockUpdate();
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+    SystemCoreClockUpdate();
     /* setup sysclock */
     SysTick->CTLR = 0;
     NVIC_EnableIRQ(SysTicK_IRQn);
@@ -34,15 +34,15 @@ unsigned long micros() {
 
 void delay(unsigned long ms)
 {
-	uint32_t start = micros();
+    uint32_t start = micros();
 
-	while (ms > 0) {
-		yield();
-		while ( ms > 0 && (micros() - start) >= 1000) {
-			ms--;
-			start += 1000;
-		}
-	}
+    while (ms > 0) {
+        yield();
+        while ( ms > 0 && (micros() - start) >= 1000) {
+            ms--;
+            start += 1000;
+        }
+    }
 }
 
 void delayMicroseconds(unsigned int us)
