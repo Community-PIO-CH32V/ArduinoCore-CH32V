@@ -38,7 +38,8 @@ unsigned long micros()
     uint32_t m0 = currTime;
     // get the number of systicks that happened since the previous compare
     // then convert that to microseconds and add on top of current millis
-    uint32_t ticks_since_last_cmp = (SysTick->CNT - (SysTick->CMP - sysclock_div_1000));
+    // CNT - (CMP - sysclock_div_100) is equivalent to this
+    uint32_t ticks_since_last_cmp = (SysTick->CNT + sysclock_div_1000) - SysTick->CMP;
     return m0 * 1000u + ticks_since_last_cmp / sysclock_div_1000000;
 }
 
