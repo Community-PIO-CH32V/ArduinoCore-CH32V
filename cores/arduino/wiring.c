@@ -48,8 +48,10 @@ void delay(unsigned long ms)
     while( ((int64_t)( SysTick->CNT - targend )) < 0 );
 }
 
+/* number of cycles it takes to compute targend, empircally determined, in -Os mode, for CH32V307. */
+#define CORRECTION_TERM_CYCLES 20
 void delayMicroseconds(unsigned int us)
 {
-    uint64_t targend = (SysTick->CNT + us*sysclock_div_1000000);
+    uint64_t targend = (SysTick->CNT + us*sysclock_div_1000000 - CORRECTION_TERM_CYCLES);
     while( ((int64_t)( SysTick->CNT - targend )) < 0 );
 }
