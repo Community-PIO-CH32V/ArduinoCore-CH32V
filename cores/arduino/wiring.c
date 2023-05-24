@@ -49,9 +49,23 @@ void delay(unsigned long ms)
 }
 
 /* number of cycles it takes to compute targend, empircally determined, in -Os mode, for CH32V307. */
-#define CORRECTION_TERM_CYCLES 20
+#define CORRECTION_TERM_CYCLES 22
+#define READ_SYSTICK_CNT_LOW *(volatile uint32_t*)(&SysTick->CNT)
+#define READ_SYSTICK_CNT_HIGH *((volatile uint32_t*)(&SysTick->CNT) + 1)
+/* try to read systick count properly */
+static inline uint64_t read_systick_cnt() {
+    uint32_t targendhi;
+    uint32_t targendlo;
+    do
+    {
+        targendhi = READ_SYSTICK_CNT_HIGH;
+        targendlo = READ_SYSTICK_CNT_LOW;
+    } while (READ_SYSTICK_CNT_HIGH != targendhi);
+    return targendlo + ((uint64_t)targendhi << 32ULL);
+}
+
 void delayMicroseconds(unsigned int us)
 {
-    uint64_t targend = (SysTick->CNT + us*sysclock_div_1000000 - CORRECTION_TERM_CYCLES);
-    while( ((int64_t)( SysTick->CNT - targend )) < 0 );
+    uint64_t targend = (read_systick_cnt() + us*sysclock_div_1000000 - CORRECTION_TERM_CYCLES);
+    while( ((int64_t)( read_systick_cnt() - targend )) < 0 );
 }
